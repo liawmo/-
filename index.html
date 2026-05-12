@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>五子棋</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <section class="game-shell" aria-label="五子棋游戏">
+        <header class="topbar">
+          <div>
+            <h1>五子棋</h1>
+            <p id="status" class="status" aria-live="polite">黑棋先手</p>
+          </div>
+          <div class="actions">
+            <button id="undoBtn" type="button">悔棋</button>
+            <button id="restartBtn" type="button">重开</button>
+          </div>
+        </header>
+
+        <div class="settings" aria-label="游戏设置">
+          <label>
+            <span>规则</span>
+            <select id="ruleSelect">
+              <option value="free">自由规则</option>
+              <option value="standard">标准规则</option>
+            </select>
+          </label>
+          <label>
+            <span>模式</span>
+            <select id="modeSelect">
+              <option value="normal">普通</option>
+              <option value="obstacle">障碍棋盘</option>
+              <option value="timed">限时快棋</option>
+              <option value="random">随机开局</option>
+            </select>
+          </label>
+          <label>
+            <span>主题</span>
+            <select id="themeSelect">
+              <option value="classic">木纹</option>
+              <option value="simple">简洁</option>
+              <option value="dark">深色</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="mode-tip" id="modeTip">普通模式：双方轮流落子，先连成五子获胜。</div>
+
+        <section class="online-panel" aria-label="局域网联机">
+          <div>
+            <h2>局域网对战</h2>
+            <p id="onlineStatus">离线：本机双人对弈</p>
+          </div>
+          <div class="online-actions">
+            <button id="createRoomBtn" class="ghost-btn" type="button">创建房间</button>
+            <input id="roomInput" type="text" inputmode="latin" maxlength="6" placeholder="房间码" aria-label="房间码" />
+            <button id="joinRoomBtn" class="ghost-btn" type="button">加入</button>
+            <button id="leaveRoomBtn" class="ghost-btn" type="button" hidden>离开</button>
+          </div>
+        </section>
+
+        <div class="board-wrap">
+          <canvas id="board" width="720" height="720" aria-label="15 x 15 五子棋棋盘"></canvas>
+        </div>
+
+        <footer class="scorebar">
+          <div class="player active" id="blackPanel">
+            <span class="stone-icon black"></span>
+            <span>黑棋</span>
+          </div>
+          <div class="move-count" id="moveCount">0 手</div>
+          <div class="timer-badge" id="timerBadge" hidden>15 秒</div>
+          <div class="player" id="whitePanel">
+            <span class="stone-icon white"></span>
+            <span>白棋</span>
+          </div>
+        </footer>
+
+        <section class="side-panel" aria-label="对局信息">
+          <div class="panel-section">
+            <div class="section-title">
+              <h2>比分</h2>
+              <button id="clearStatsBtn" class="ghost-btn" type="button">清空</button>
+            </div>
+            <div class="stats-grid">
+              <div><span id="blackWins">0</span><small>黑胜</small></div>
+              <div><span id="whiteWins">0</span><small>白胜</small></div>
+              <div><span id="draws">0</span><small>平局</small></div>
+              <div><span id="totalGames">0</span><small>总局</small></div>
+            </div>
+          </div>
+
+          <div class="panel-section">
+            <div class="section-title">
+              <h2>棋谱</h2>
+              <div class="compact-actions">
+                <button id="exportBtn" class="ghost-btn" type="button">导出</button>
+                <button id="importBtn" class="ghost-btn" type="button">导入</button>
+              </div>
+            </div>
+            <ol id="moveList" class="move-list" aria-label="落子记录"></ol>
+            <input id="importFile" type="file" accept="application/json,.json" hidden />
+          </div>
+        </section>
+      </section>
+
+      <dialog id="resultDialog" class="result-dialog">
+        <h2 id="resultTitle">对局结束</h2>
+        <p id="resultText"></p>
+        <div class="dialog-actions">
+          <button id="closeDialogBtn" class="ghost-btn" type="button">查看棋盘</button>
+          <button id="newGameBtn" type="button">再来一局</button>
+        </div>
+      </dialog>
+    </main>
+
+    <script src="game.js"></script>
+  </body>
+</html>
